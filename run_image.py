@@ -131,7 +131,7 @@ import pickle
 
 
 # # convert the three-channel output to a single channel depth map
-# res = res.sum(-1) / res.shape[-1]
+res = res.sum(-1) / res.shape[-1]
 
 # # normalize the depth map to [0, 1] across the whole video
 # res = (res - res.min()) / (res.max() - res.min())
@@ -142,12 +142,14 @@ os.makedirs(path_output, exist_ok=True)
 print("\nSaving output frames...")
 
 progress_bar_save = tqdm.tqdm(total=framecount)
-
+import matplotlib.pyplot as plt
 for i in range(framecount):
     
     frame_array = res[i]
+    depth_data = {
+                "depth_pred_s0_b1hw": torch.tensor(frame_array).unsqueeze(0).unsqueeze(0)}
     with open(os.path.join(path_output,str(i) + '.pickle'), 'wb') as f:
-        pickle.dump(frame_array, f)
+        pickle.dump(depth_data, f)
 #   frame_array = res[i]
 #   frame_array = frame_array * 255
 #   frame_array = frame_array.astype(np.uint8) 
