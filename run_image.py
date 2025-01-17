@@ -144,8 +144,9 @@ print("\nSaving output frames...")
 progress_bar_save = tqdm.tqdm(total=framecount)
 
 for i in range(framecount):
+    
     frame_array = res[i]
-    with open((i + '.pkl'), 'wb') as f:
+    with open(os.path.join(path_output,str(i) + '.pickle'), 'wb') as f:
         pickle.dump(frame_array, f)
 #   frame_array = res[i]
 #   frame_array = frame_array * 255
